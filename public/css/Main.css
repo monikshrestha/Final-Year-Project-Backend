@@ -1,0 +1,294 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+body{
+    margin: 0;
+    padding: 0;
+}
+.cardheading h6{
+  font-size: 18px;
+}
+.card1 p{
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  float: right;
+}
+
+.card1{
+    margin-top: 4%;
+    height: 200px;
+    width: 200;
+    padding: 4%;    
+}
+
+.mainbody{
+    padding: 2% ;
+}
+
+.body{
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+header {
+  position: fixed;
+  background-color: #115cb1;
+  padding: 20px;
+  height: 35px;
+  width: 100%;
+}
+
+.topic-head{
+  padding-top: 20px;
+  padding-bottom: 2%;
+}
+
+.topic-left {
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.add_button {
+  padding: 7px;
+  background-color: #0cc43a;
+  text-decoration: none;
+  float: right;
+  margin-top: -37px;
+  font-size: 14px;
+  padding: 8px;
+  border-radius: 8px;
+  color: aliceblue;
+  transition: 1s;
+}
+
+.add_button:hover {
+  background: #23a309;
+  text-decoration: none;
+  border-radius: 8px;
+  color: aliceblue;
+}
+
+.Heading{
+  font-size: 24px;
+  font-weight: 400;
+}
+td {
+  font-size: 13px;
+}
+thead{
+  font-size: 14px;
+  font-weight: 600;
+}
+
+td a{
+  color: #1100ff;
+  font-weight: 600;
+}
+td a:hover{
+  color: #ff6060;
+  text-decoration: none;
+}
+
+.sub-topic {
+  font-size: 17px;
+  font-weight: bold;
+  margin-bottom: 2%;
+  letter-spacing: 1px;
+}
+
+
+.UserProfile{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.UserProfile img{
+  height: 90px;
+  width: 90px;
+  border-radius: 50%;
+}
+
+.UserProfile p{
+  padding-top: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+}
+.UserProfile span{
+  font-size: 14px;
+  text-transform: capitalize;
+  font-style: italic;
+}
+.logout{
+  width: 100%;
+}
+.logout a{
+  background-color: rgb(255, 57, 57);
+  float: right;
+  color: #ffffff;
+  border-radius: 6px;
+  padding: 4px 7px;
+}
+.logout a:hover{
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.editprofile{
+ padding: 10px ;
+}
+.editprofile a{
+  background-color: rgb(255, 166, 0);
+  width: 115px;
+  padding: 7px;
+  border-radius: 6px;
+  color: #ffffff;
+  text-transform: capitalize;
+}
+
+.editprofile a:hover{
+  text-decoration: none;
+  color: white;
+}
+
+/* Userproject */
+.task{
+  padding: 10px;
+}
+/* Userdetails */
+.ProfileDetails{
+  margin: 20px 0;
+}
+.profilewrapper{
+  padding: 2%;
+}
+.ProfileDetails p{
+  margin: 0;
+  float: left;
+  width: 120px;
+}
+
+.Userpp img{
+  height: auto;
+  width: 100%;
+  border-radius: 6px;
+}
+.UserDescription{
+  margin: 10px;
+  font-size: 14px;
+}
+
+.UserDescription p{
+font-weight: 500;
+}
+.usercard{
+  padding: 2%;
+}
+
+.userform{
+  margin-top: 10px;
+}
+
+.formgroup{
+  margin: 10px 0;
+}
+
+.formgroup p{
+  margin: 0;
+}
+
+.formwrapper{
+  padding: 0 2%;
+}
+
+.MainHeading{
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.MainHeading a{
+  background-color: #b8b8b86b;
+  padding: 4px ;
+  border-radius: 6px;
+  color: white;
+}
+.MainHeading a:hover{
+  background-color: #b8b8b8;
+  color: white;
+}
+.formwrapper p {
+  font-size: 14px;
+  margin: 10px 0;
+  font-weight: 600;
+}
+
+
+.overSelect {
+  position: absolute;
+}
+
+.multipleSelection { 
+  background-color: #e6e6e6; 
+  border-radius: 5px; 
+} 
+
+.selectBox { 
+  position: relative;
+
+} 
+
+.selectBox select {
+  width: 100%;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 2%;
+  border: none;
+  background-color: #f6f6f6;
+}
+
+.overSelect { 
+  position: absolute; 
+  left: 0; 
+  right: 0; 
+  top: 0; 
+  bottom: 0; 
+} 
+
+#checkBoxes { 
+  display: none; 
+  border-radius: 4px;
+} 
+
+#checkBoxes label { 
+  padding: 2% 4%;
+  font-size: 14px;
+  display: block; 
+} 
+
+#checkBoxes label:hover { 
+  color: #44bbff;
+  border-radius: 4px;
+} 
+
+#description{
+  background-color: #f6f6f6;
+  border: none;
+  color: #0d0d0d;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+
+  width: 100%;
+  border: 2px solid #f6f6f6;
+  -webkit-border-radius: 5px 5px 5px 5px;
+  border-radius: 5px 5px 5px 5px;
+}
+#description:focus{
+  background-color: #ffffff;
+  border-color: #14e4ff;
+}

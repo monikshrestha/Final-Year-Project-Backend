@@ -4,10 +4,17 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const { request } = require("http");
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+  cors({
+    origin: true,
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -16,11 +23,19 @@ const db = mysql.createConnection({
   database: "sajilodb",
 });
 
+// app.get("./poop", (req, res) =>{
+//   res.send("Hello!")
+// })
+
 db.connect((err) => {
   if (!err) console.log("DB conenction succed");
   else console.log("DB conenction failed");
 });
 
+app.use(express.static('public'))
+// app.use('./css', expresss.static(__dirname, "public/css"))
+// app.use('./js', expresss.static(__dirname, "public/js"))
+// app.use('./img', expresss.static(__dirname, "public/img"))
 app.set("views", path.join(__dirname, "views"));
 
 //set view engine
@@ -28,16 +43,16 @@ app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.get("/support", (req, res) => {
-  // res.send('CRUD Operation using NodeJS / ExpressJS / MySQL');
-  db.query("SELECT * FROM app_feedback", (err, row) => {
-    if (err) throw err;
-    res.render("support_index", {
-      title: "Support Page",
-      app_feedback: row,
-    });
-  });
-});
+// app.get("/support", (req, res) => {
+//   // res.send('CRUD Operation using NodeJS / ExpressJS / MySQL');
+//   db.query("SELECT * FROM app_feedback", (err, row) => {
+//     if (err) throw err;
+//     res.render("support_index", {
+//       title: "Support Page",
+//       app_feedback: row,
+//     });
+//   });
+// });
 
 // Viewing the tables from app feedback
 // app.get('/api/get', (req, res) => {
@@ -47,17 +62,18 @@ app.get("/support", (req, res) => {
 //   });
 // });
 
-// app.post("/api/insert", (req, res) => {
-
-//     const fedName = req.body.fedName;
-//     const fedEmail = req.body.fedEmail;
-//     const fedFedback = req.body.fedfedback;
-
-//     const sqlInsert ="INSERT INTO app_feedback (fedName, fedEmail, fedfedback) VALUES (?,?,?)";
-//     db.query(sqlInsert, [fedName, fedEmail, fedFedback], (err,result)=>{
-//         console.log(err);
-//     });
-// });
+app.post("/api/insert", (req, res) => {
+    console.log(req.body);
+    const fedName = req.body.fedName;
+    const fedEmail = req.body.fedEmail;
+    const fedfedback = req.body.fedfedback;
+    console.log(fedName);
+    const sqlInsert ="INSERT INTO app_feedback (fedName, fedEmail, fedfedback) VALUES (?,?,?)";
+    db.query(sqlInsert, [fedName, fedEmail, fedfedback], (err,result)=>{
+      if (!err) res.send(result);
+      else res.send(err);
+    });
+});
 
 // Viewing the tables from app feedback
 // app.get('/support', (req, res) => {
@@ -84,6 +100,6 @@ app.get("/support", (req, res) => {
 //   });
 // });
 
-app.listen(3001, () => {
+app.listen(3001, '0.0.0.0', () => {
   console.log("Running on the port: 3001");
 });
