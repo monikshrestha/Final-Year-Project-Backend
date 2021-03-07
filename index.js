@@ -5,6 +5,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { request } = require("http");
+const e = require("express");
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -23,10 +24,6 @@ const db = mysql.createConnection({
   database: "sajilodb",
 });
 
-// app.get("./poop", (req, res) =>{
-//   res.send("Hello!")
-// })
-
 db.connect((err) => {
   if (!err) console.log("DB conenction succed");
   else console.log("DB conenction failed");
@@ -43,37 +40,68 @@ app.set("view engine", "ejs");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.get("/support", (req, res) => {
-//   // res.send('CRUD Operation using NodeJS / ExpressJS / MySQL');
-//   db.query("SELECT * FROM app_feedback", (err, row) => {
-//     if (err) throw err;
-//     res.render("support_index", {
-//       title: "Support Page",
-//       app_feedback: row,
-//     });
-//   });
-// });
+app.get("/support", (req, res) => {
+  // res.send('CRUD Operation using NodeJS / ExpressJS / MySQL');
+  db.query("SELECT * FROM app_feedback", (err, row) => {
+    if (err) throw err;
+    res.render("support_index", {
+      title: "Support Page",
+      app_feedback: row,
+    });
+  });
+});
 
-// Viewing the tables from app feedback
-// app.get('/api/get', (req, res) => {
-//   db.query('SELECT * FROM app_feedback', (err, result) => {
-//     if (!err) res.send(result);
-//     else console.log(err);
-//   });
-// });
+app.post("/api/register", (req, res) => {
+  const uname = req.body.uname;
+  const uemail = req.body.uemail;
+  const upassword = req.body.upassword;
+  const sqlInsert ="INSERT INTO users (uname, uemail, upassword) VALUES (?,?,?)";
+  db.query(sqlInsert, [uname, uemail, upassword], (err,result)=>{
+    if (!err) res.send(result);
+    else res.send(err);
+  });
+});
+
+app.post("/register", (req, res) => {
+  const uname = req.body.uname;
+  const uemail = req.body.uemail;
+  const upassword = req.body.upassword;
+
+  db.query("SELECT * FROM users WHERE uemail = ? and password = ?", [uname, uemail, upassword], (err,result)=>{
+    if (!err) res.send({err:err});
+
+    if (result){
+      res.send(result);
+    }
+      else {
+        res.send({message: "Wrong email and password"})
+      }
+  });
+});
 
 app.post("/api/insert", (req, res) => {
     console.log(req.body);
     const fedName = req.body.fedName;
     const fedEmail = req.body.fedEmail;
     const fedfedback = req.body.fedfedback;
-    console.log(fedName);
-    const sqlInsert ="INSERT INTO app_feedback (fedName, fedEmail, fedfedback) VALUES (?,?,?)";
+    const sqlInsert ="INSERT INTO app_feedback (fedName, fedEmail, fedfedback) VALUES (?,?)";
     db.query(sqlInsert, [fedName, fedEmail, fedfedback], (err,result)=>{
       if (!err) res.send(result);
       else res.send(err);
     });
 });
+
+// app.get("/", (req, res) => {
+//   // res.send('CRUD Operation using NodeJS / ExpressJS / MySQL');
+//   db.query("SELECT * FROM app_feedback", (err, row) => {
+//     if (err) throw err;
+//     res.render("support_index", {
+//       title: "Dashboard Page",
+//       app_feedback: row,
+//     });
+//   });
+// });
+
 
 // Viewing the tables from app feedback
 // app.get('/support', (req, res) => {
