@@ -4,10 +4,9 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const { request } = require("http");
-const e = require("express");
 
 app.use(express.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
@@ -29,19 +28,12 @@ db.connect((err) => {
   else console.log("DB conenction failed");
 });
 
-app.use(express.static('public'))
-// app.use('./css', expresss.static(__dirname, "public/css"))
-// app.use('./js', expresss.static(__dirname, "public/js"))
-// app.use('./img', expresss.static(__dirname, "public/img"))
-app.set("views", path.join(__dirname, "views"));
-
 //set view engine
 app.set("view engine", "ejs");
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static('public'))
+app.set("views", path.join(__dirname, "views"));
 
 app.get("/support", (req, res) => {
-  // res.send('CRUD Operation using NodeJS / ExpressJS / MySQL');
   db.query("SELECT * FROM app_feedback", (err, row) => {
     if (err) throw err;
     res.render("support_index", {
@@ -50,6 +42,27 @@ app.get("/support", (req, res) => {
     });
   });
 });
+
+
+
+app.get("/notification", (req, res) => {
+  res.render("notification_index", {
+    title: "Notification Page",
+  });
+});
+
+app.get("/dashboard", (req, res) => {
+  res.render("dashboard_index", {
+    title: "Dashboard Page",
+  });
+});
+
+app.get("/user", (req, res) => {
+  res.render("user_index", {
+    title: "User Page",
+  });
+});
+
 
 app.post("/api/register", (req, res) => {
   const uname = req.body.uname;
