@@ -33,18 +33,6 @@ app.set("view engine", "ejs");
 app.use(express.static('public'))
 app.set("views", path.join(__dirname, "views"));
 
-app.get("/support", (req, res) => {
-  db.query("SELECT * FROM app_feedback", (err, row) => {
-    if (err) throw err;
-    res.render("support_index", {
-      title: "Support Page",
-      app_feedback: row,
-    });
-  });
-});
-
-
-
 app.get("/notification", (req, res) => {
   res.render("notification_index", {
     title: "Notification Page",
@@ -63,34 +51,33 @@ app.get("/user", (req, res) => {
   });
 });
 
-
-app.post("/api/register", (req, res) => {
-  const uname = req.body.uname;
-  const uemail = req.body.uemail;
-  const upassword = req.body.upassword;
-  const sqlInsert ="INSERT INTO users (uname, uemail, upassword) VALUES (?,?,?)";
-  db.query(sqlInsert, [uname, uemail, upassword], (err,result)=>{
-    if (!err) res.send(result);
-    else res.send(err);
+app.get("/notification", (req, res) => {
+  res.render("notification_index", {
+    title: "Notification Page",
   });
 });
 
-app.post("/register", (req, res) => {
-  const uname = req.body.uname;
-  const uemail = req.body.uemail;
-  const upassword = req.body.upassword;
+const loginRouter = require("./routes/login");
+app.use(loginRouter);
 
-  db.query("SELECT * FROM users WHERE uemail = ? and password = ?", [uname, uemail, upassword], (err,result)=>{
-    if (!err) res.send({err:err});
+const registerRouter = require("./routes/register");
+app.use(registerRouter);
 
-    if (result){
-      res.send(result);
-    }
-      else {
-        res.send({message: "Wrong email and password"})
-      }
-  });
-});
+const feedbackRouter = require("./routes/feedback");
+app.use(feedbackRouter);
+
+const socialLogRouter = require("./routes/socialLogin");
+app.use(socialLogRouter);
+
+const updateUserRouter = require("./routes/updateUser");
+app.use(updateUserRouter);
+
+const profileImageRouter = require("./routes/profileImage");
+app.use(profileImageRouter);
+
+const accountDeleteRouter = require("./routes/accountDelete");
+app.use(accountDeleteRouter);
+
 
 app.post("/api/insert", (req, res) => {
     console.log(req.body);
@@ -103,43 +90,6 @@ app.post("/api/insert", (req, res) => {
       else res.send(err);
     });
 });
-
-// app.get("/", (req, res) => {
-//   // res.send('CRUD Operation using NodeJS / ExpressJS / MySQL');
-//   db.query("SELECT * FROM app_feedback", (err, row) => {
-//     if (err) throw err;
-//     res.render("support_index", {
-//       title: "Dashboard Page",
-//       app_feedback: row,
-//     });
-//   });
-// });
-
-
-// Viewing the tables from app feedback
-// app.get('/support', (req, res) => {
-//   db.query('SELECT * FROM app_feedback', (err, row) => {
-//     if (!err) res.send(row);
-//     else console.log(err);
-//   });
-// });
-
-// Deleting the ID from app feedback
-// app.delete('/support/:id', (req, res) => {
-//     db.query('DELETE FROM app_feedback WHERE fedID =?',[req.params.id], (err, row, fields) => {
-//       if (!err) res.send('deleted sucessfully');
-//       else console.log(err);
-//     });
-//   });
-
-// Inserting Value in the database
-// app.get("/support", (req, res) => {
-//   const sqlInsert ="INSERT INTO app_feedback (fedName, fedEmail, fedfedback) VALUES ('Monik', 'test@gmail.com', 'it works')";
-//   db.query(sqlInsert, (err, row) => {
-//     if (!err) console.log(row);
-//     else console.log(err);
-//   });
-// });
 
 app.listen(3001, '0.0.0.0', () => {
   console.log("Running on the port: 3001");
