@@ -20,8 +20,7 @@ module.exports = loginPOST = (req, res) => {
           const token = jwt.sign({ id }, process.env.JWT_SECRET, {
             expiresIn: 300, // expires in 5 mintes
           });
-          req.session.user = result;
-
+         console.log(token);
           res.json({
             auth: true,
             token: token,

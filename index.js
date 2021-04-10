@@ -45,50 +45,62 @@ app.get("/dashboard", (req, res) => {
   });
 });
 
-app.get("/user", (req, res) => {
-  res.render("user_index", {
-    title: "User Page",
-  });
-});
-
-app.get("/notification", (req, res) => {
-  res.render("notification_index", {
-    title: "Notification Page",
-  });
-});
-
 const loginRouter = require("./routes/login");
 app.use(loginRouter);
 
 const registerRouter = require("./routes/register");
 app.use(registerRouter);
 
-const feedbackRouter = require("./routes/feedback");
-app.use(feedbackRouter);
-
-const socialLogRouter = require("./routes/socialLogin");
-app.use(socialLogRouter);
-
-const updateUserRouter = require("./routes/updateUser");
-app.use(updateUserRouter);
-
-const profileImageRouter = require("./routes/profileImage");
-app.use(profileImageRouter);
+const usersRouter = require("./routes/users");
+app.use(usersRouter);
 
 const accountDeleteRouter = require("./routes/accountDelete");
 app.use(accountDeleteRouter);
 
+const feedbackRouter = require("./routes/feedback");
+app.use(feedbackRouter);
 
-app.post("/api/insert", (req, res) => {
-    console.log(req.body);
-    const fedName = req.body.fedName;
-    const fedEmail = req.body.fedEmail;
-    const fedfedback = req.body.fedfedback;
-    const sqlInsert ="INSERT INTO app_feedback (fedName, fedEmail, fedfedback) VALUES (?,?)";
-    db.query(sqlInsert, [fedName, fedEmail, fedfedback], (err,result)=>{
-      if (!err) res.send(result);
-      else res.send(err);
+const feedbackinsertRouter = require("./routes/feedbackinsert");
+app.use(feedbackinsertRouter);
+
+const feedbackdelRouter = require("./routes/feedbackdel");
+app.use(feedbackdelRouter);
+
+
+// app.post("/api/insert", (req, res) => {
+//     console.log(req.body);
+//     const fedName = req.body.fedName;
+//     const fedEmail = req.body.fedEmail;
+//     const fedfedback = req.body.fedfedback;
+//     const sqlInsert ="INSERT INTO app_feedback (fedName, fedEmail, fedfedback) VALUES (?,?)";
+//     db.query(sqlInsert, [fedName, fedEmail, fedfedback], (err,result)=>{
+//       if (!err) res.send(result);
+//       else res.send(err);
+//     });
+// });
+
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["authorization"];
+  // const token = req.body.token;
+  // console.log(req.body.token);
+  if (!token) {
+    res.json({ auth: false, message: "Please provide a token." });
+  } else {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        res.json({
+          auth: false,
+          message: "You failed to authenticate",
+        });
+      } else {
+        req.user_id = decoded.id;
+        next();
+      }
     });
+  }
+};
+app.post("/isUserAuth", verifyJWT, (req, res) => {
+  res.json({ auth: true, message: "You are authenticated" });
 });
 
 app.listen(3001, '0.0.0.0', () => {

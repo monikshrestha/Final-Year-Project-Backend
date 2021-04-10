@@ -44,7 +44,7 @@
                   >
                 </li>
                 <li>
-                  <a href="http://localhost:3001/user"
+                  <a href="http://localhost:3001/users"
                     ><i class="fas fa-project-diagram"></i> Users</a
                   >
                 </li>
@@ -68,7 +68,38 @@
           <div class="topic-head">
             <div class="topic-left"><%= title %></div>
           </div>
-
+          <table class="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone No.</th>
+                <th>Gender</th>
+                <th>Role</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% users.forEach(function(users) {%>
+              <tr>
+                <td><%= users.fname %></td>
+                <td><%= users.lname %></td>
+                <td><%= users.email %></td>
+                <td><%= users.phone %></td>
+                <td><%= users.gender %></td>
+                <td><%= users.role %></td>
+                <td>
+                  <a
+                    href="#"
+                    class="btn btn-sm btn-danger"
+                    >Delete</a
+                  >
+                </td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
