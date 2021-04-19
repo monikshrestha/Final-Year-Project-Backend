@@ -8,7 +8,6 @@ const InsertQuery =
 
 module.exports = (req, res) => {
   const { fname, lname, email, password, phone, dob, gender } = req.body.values;
-  console.log(dob);
   const role = "C";
   try {
     db.query(SelectQuery, email, (err, result) => {

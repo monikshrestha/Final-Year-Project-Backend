@@ -2,7 +2,7 @@ const db = require("../database");
 
 const router = require("express").Router();
 
-const deleteQuery = "DELETE FROM app_feedback WHERE fed_id =?";
+const deleteQuery = "DELETE FROM app_feedback WHERE fed_id = ?";
 
 module.exports = router.post("/deletefeedback", (req, res) => {
   const { id } = req.body;
