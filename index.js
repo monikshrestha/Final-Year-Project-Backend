@@ -67,18 +67,9 @@ app.use(feedbackinsertRouter);
 const feedbackdelRouter = require("./routes/feedbackdel");
 app.use(feedbackdelRouter);
 
+const userdelRouter = require("./routes/userdel");
+app.use(userdelRouter);
 
-// app.post("/api/insert", (req, res) => {
-//     console.log(req.body);
-//     const fedName = req.body.fedName;
-//     const fedEmail = req.body.fedEmail;
-//     const fedfedback = req.body.fedfedback;
-//     const sqlInsert ="INSERT INTO app_feedback (fedName, fedEmail, fedfedback) VALUES (?,?)";
-//     db.query(sqlInsert, [fedName, fedEmail, fedfedback], (err,result)=>{
-//       if (!err) res.send(result);
-//       else res.send(err);
-//     });
-// });
 
 const verifyJWT = (req, res, next) => {
   const token = req.headers["authorization"];

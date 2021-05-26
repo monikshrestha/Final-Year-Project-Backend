@@ -2,10 +2,10 @@ const db = require("../database");
 
 const router = require("express").Router();
 
-const deleteQuery = "DELETE FROM app_feedback WHERE fed_id =?";
+const deleteQuery = "DELETE FROM users WHERE user_id =?";
 
-module.exports = router.get("/feedbackdel/:fed_id", (req, res) => {
-  const { id } = req.params.fed_id;
+module.exports = router.get("/userdel/:user_id", (req, res) => {
+  const { id } = req.params.user_id;
   console.log(id);
 
   db.query(deleteQuery, [id], (err, result) => {
@@ -15,5 +15,4 @@ module.exports = router.get("/feedbackdel/:fed_id", (req, res) => {
       res.send(result);
     }
   });
-  
 });
